@@ -1,0 +1,48 @@
+{
+  "name": "speek",
+  "version": "0.1.0",
+  "private": true,
+  "author": {"name": "stroe", "email": "2919390584@qq.com"},
+  "homepage":"http://www.shizhenfei.top",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:build:deb": "vue-cli-service electron:build --linux deb",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "core-js": "^3.8.3",
+    "nedb": "^1.8.0",
+    "qs": "^6.11.0",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.0.6",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "element-plus": "^2.2.8",
+    "less": "^4.0.0",
+    "less-loader": "^8.0.0",
+    "moment": "^2.29.4",
+    "unplugin-auto-import": "^0.9.2",
+    "unplugin-vue-components": "^0.21.0",
+    "vue-cli-plugin-electron-builder": "~2.1.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

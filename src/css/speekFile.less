@@ -1,0 +1,108 @@
+.file-upload {
+    box-sizing: border-box;
+    height: 30%;
+    margin-bottom: 50px;
+    border: 2px dashed var(--el-border-color);
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    .file-image {
+        position: absolute;
+        width: 30%;
+        height: 30%;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+        border-radius: 10px;
+        svg {
+            width: 80%;
+            height: 80%;
+        }
+    }
+    .file-title {
+        position: absolute;
+        width: 100%;
+        top: 55%;
+        font-size: 12px;
+        text-align: center;
+    }
+    &:hover {
+        background-color: #e5eaf3;
+    }
+}
+.file-data {
+    box-sizing: border-box;
+    height: 45%;
+    text-align: left;
+    .demo-form-inline{
+        word-break:break-all;
+        word-wrap:break-word;
+            /* 设置或检索伸缩盒对象的子元素的排列方式 。 */
+    
+    }
+    .el-form-item__content{
+        display: -webkit-box;
+        /* 设置或检索伸缩盒对象的子元素的排列方式 。 */
+        -webkit-box-orient: vertical;
+        /*  用来限制在一个块元素显示的文本的行数 */
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+    .el-descriptions__body {
+        background-color: var(--el-color-info-light-9);
+    }
+    .scrollbar-demo-item {
+        position: relative;
+        line-height: 20px;
+        font-size: 12px;
+        height: 20px;
+        margin: 5px;
+        padding: 0 40px;
+        text-align: left;
+        border-radius: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        svg {
+            z-index: 90;
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            top: 0;
+            right: 5px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+    }
+    .file-success {
+        float: left;
+        height: 100%;
+        width: 35%;
+        .scrollbar-demo-item {
+            background-color: #409eff;
+
+        }
+    }
+    .file-unsuccess {
+        width: 35%;
+        height: 100%;
+        float: left;
+        .scrollbar-demo-item {
+            background-color: #f56c6c;
+        }
+    }
+    .file-title {
+        padding: 20px;
+        padding-top: 0;
+        height: 100%;
+        width: 30%;
+        float: left;
+        .el-form-item{
+            margin-bottom: 0;
+        }
+        .el-input {
+            width: 55%;
+        }
+    }
+}
+
