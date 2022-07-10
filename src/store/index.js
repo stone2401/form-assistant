@@ -10,11 +10,9 @@ configDatabase.db.find({ _id: 'config' }, (err, docs) => {
         const setting = require('./setting.json')
         configDatabase.db.insert(setting)
         config = reactive(setting)
-        console.log('加载默认配置')
     } else {
         let temp = docs[0]
         storn['state']['config'] = reactive(temp)
-        console.log('加载配置用户配置')
     }
 })
 import setting from './setting.json'
@@ -29,6 +27,7 @@ const storn = createStore({
     state: {
         language,
         config,
+        atRouter: '/',
     },
     getters: {
         lang: (context) => {
@@ -39,6 +38,9 @@ const storn = createStore({
         },
         langs: (context) => {
             return context['config']['langs']
+        },
+        AtRouter: (context) => {
+            return context['atRouter']
         },
     },
     mutations: {
@@ -60,6 +62,9 @@ const storn = createStore({
                     })
                 }
             })
+        },
+        pushRouter(context, value) {
+            context['atRouter'] = value
         },
     },
     actions: {},

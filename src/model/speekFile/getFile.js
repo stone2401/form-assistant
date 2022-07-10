@@ -76,24 +76,22 @@ let globeOutput = computed({
 })
 
 let showMsgErr = null
+
 const groupingValidator = (rule, value, callack) => {
+    if (showMsgErr) {
+        showMsgErr.close()
+    }
     if (value.length >= 10) {
-        if (showMsgErr) {
-            showMsgErr.close()
-        } else {
-            showMsgErr = ElMessage({
-                type: 'error',
-                showClose: true,
-                message: lang.value['errClassfy'],
-                duration: 5000,
-            })
-        }
+        showMsgErr = ElMessage({
+            type: 'error',
+            showClose: true,
+            message: lang.value['errClassfy'],
+            duration: 5000,
+        })
         callack(new Error(lang.value['errClassfy']))
     } else {
-        fileDatabase.db.find({ classify: value }, (err, docs) => {
-            if (err || showMsgErr) {
-                showMsgErr.close()
-            } else if (docs.length != 0) {
+        fileDatabase.findClassify(fileData['classify'], (pass) => {
+            if (!pass) {
                 showMsgErr = ElMessage({
                     type: 'error',
                     showClose: true,

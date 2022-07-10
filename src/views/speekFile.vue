@@ -97,45 +97,50 @@ import '@/css/speekFile.less'
 import getFile from '@/model/speekFile/getFile'
 import { useRouter } from 'vue-router'
 import filedb from '@/database/filedb'
-
+import { useStore } from 'vuex'
 export default {
     name: 'speekFile',
     setup() {
         let globleData = getFile()
         const routers = useRouter()
-
+        let store = useStore()
         // TODO: 创建任务main逻辑
         let createError = null
         let fileData = globleData['fileData']
-        const createTask = function () {
-            if (createError) {
-                createError.close()
-            }
-            if (fileData['classify'] != '' && fileData['classify'].length <= 10) {
-                filedb.db.find(fileData, (err, docs) => {
-                    if (!err && docs.length === 0) {
-                        let nowTime = globleData.getData()
-                        fileData = { ...fileData, ...nowTime }
-                        filedb.db.insert(fileData, (err) => {
-                            if (!err) {
-                                routers.push({ path: '/show', query: { classify: '1123' } })
-                            } else {
-                                createError = ElNotification({
-                                    title: 'Error',
-                                    message: `${globleData['lang'].value['createError']}${err}`,
-                                    type: 'error',
-                                    position: 'bottom-right',
-                                })
-                            }
-                        })
+        const saveData = function (pass, classify) {
+            if (pass) {
+                let nowTime = globleData.getData()
+                fileData = { ...fileData, ...nowTime }
+                filedb.insertAllData(fileData, (err) => {
+                    if (!err) {
+                        routers.push({ path: '/show', query: { classify } })
+                        store.commit('pushRouter', '/show')
                     } else {
                         createError = ElNotification({
                             title: 'Error',
-                            message: `${globleData['lang'].value['alrError2']}`,
+                            message: `${globleData['lang'].value['createError']}${err}`,
                             type: 'error',
                             position: 'bottom-right',
                         })
                     }
+                })
+            } else {
+                createError = ElNotification({
+                    title: 'Error',
+                    message: `${globleData['lang'].value['alrError2']}`,
+                    type: 'error',
+                    position: 'bottom-right',
+                })
+            }
+        }
+        const createTask = function () {
+            let classify = fileData['classify']
+            if (createError) {
+                createError.close()
+            }
+            if (classify != '' && classify.length <= 10) {
+                filedb.findClassify(classify, (pass) => {
+                    saveData(pass, classify)
                 })
             } else {
                 createError = ElNotification({

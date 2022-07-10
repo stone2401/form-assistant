@@ -1,5 +1,5 @@
 <template>
-    <el-menu id="menu" default-active="/" router class="el-menu-vertical-demo globle" style="-webkit-app-region: no-drag">
+    <el-menu id="menu" :default-active="atRouter" router class="el-menu-vertical-demo globle" style="-webkit-app-region: no-drag">
         <el-menu-item class="menu-li" index="/" route="/">
             <template #title>
                 <el-icon>
@@ -38,11 +38,22 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { FolderAdd } from '@element-plus/icons-vue'
+import { computed } from '@vue/runtime-core'
 export default {
     name: 'speekMenu',
     components: {
         FolderAdd,
+    },
+    setup() {
+        let store = useStore()
+        let atRouter = computed({
+            get() {
+                return store.getters['AtRouter']
+            },
+        })
+        return { atRouter }
     },
 }
 </script>
@@ -56,9 +67,11 @@ export default {
 .el-menu {
     border: 0 !important;
 }
+
 .el-menu-item.is-active {
     background-color: #e5eaf3 !important; //你要修改的颜色
 }
+
 #menu {
     top: 40%;
     transform: translateY(-50%);

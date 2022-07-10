@@ -1,7 +1,7 @@
 <template>
     <div class="common-layout app-main globle">
         <el-container class="app-container">
-            <el-aside width="50px" class="app-menu" style="-webkit-app-region: drag">
+            <el-aside width="60px" class="app-menu" style="-webkit-app-region: drag">
                 <speekMenu></speekMenu>
             </el-aside>
             <el-main class="app-view-main">
@@ -9,13 +9,9 @@
                     <speekHeader></speekHeader>
                 </div>
                 <div class="speekView">
-                    <router-view v-slot="{ Component }">
-                        <transition name="el-zoom-in-center">
-                            <keep-alive :include="keepComp">
-                                <component :is="Component" />
-                            </keep-alive>
-                        </transition>
-                    </router-view>
+                    <transition name="el-zoom-in-center">
+                        <router-view></router-view>
+                    </transition>
                 </div>
             </el-main>
         </el-container>
@@ -33,8 +29,8 @@ export default {
     setup() {
         const router = useRouter()
         router.push('/blank')
-        // const keepComp = ['speekFile', 'speekConfig']
-        const keepComp = []
+        const keepComp = ['speekFile', 'speekConfig']
+        // const keepComp = []
         return { keepComp }
     },
 }

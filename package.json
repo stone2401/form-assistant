@@ -2,8 +2,11 @@
   "name": "speek",
   "version": "0.1.0",
   "private": true,
-  "author": {"name": "stroe", "email": "2919390584@qq.com"},
-  "homepage":"http://www.shizhenfei.top",
+  "author": {
+    "name": "stroe",
+    "email": "2919390584@qq.com"
+  },
+  "homepage": "http://www.shizhenfei.top",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -17,6 +20,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "mitt": "^3.0.0",
     "nedb": "^1.8.0",
     "qs": "^6.11.0",
     "vue": "^3.2.13",
