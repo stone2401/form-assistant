@@ -34,6 +34,7 @@ let fileData = reactive({
     time: '',
     timestamp: '',
     output: '',
+    finished: false,
     fileDatas: {},
     errFile: [],
     folders: [],
@@ -144,7 +145,7 @@ const saveFileData = function (filePath) {
         return '.'.concat(item) == parse['ext']
     })
     if (flag != -1) {
-        let oneFile = { path: filePath, ...parse, debug: '' }
+        let oneFile = { path: filePath, ...parse, debug: '', finishedFile: false }
         if (fileData['fileDatas'][parse['name']] != undefined) {
             oneFile['debug'] = '文件名已存在'
             fileData['errFile'].push(oneFile)
