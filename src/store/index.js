@@ -3,18 +3,35 @@ import { reactive } from 'vue'
 import langZh from '@/language/zh.json'
 import langEn from '@/language/en.json'
 import configDatabase from '@/database/configdb'
+import Token from '@/model/postFile'
 let config = null
 
-configDatabase.db.find({ _id: 'config' }, (err, docs) => {
+const whetherToken = function (temp) {
+    return temp['userToken']['API_key'] != '' && temp['userToken']['Secret_key'] != '' && (temp['userToken']['token'] === '' || temp['userToken']['time'] + Token.day29 < Token.getTimeStamp())
+}
+
+configDatabase.db.find({ _id: 'config' }, async (err, docs) => {
     if (err || docs.length === 0) {
         const setting = require('./setting.json')
+        let response = await Token.getToken()
+        let token = response['data']['access_token']
+        setting['tokenObj']['token'] = token
         configDatabase.db.insert(setting)
-        config = reactive(setting)
+        storn.state.config = reactive(setting)
     } else {
         let temp = docs[0]
-        storn['state']['config'] = reactive(temp)
+        if (whetherToken(temp)) {
+            let response = await Token.getUserToken()
+            let token = response['data']['access_token']
+            setting['tokenObj']['token'] = token
+            configDatabase.db.update({ _id: 'config' }, temp, (err) => {
+                console.log(err)
+            })
+        }
+        storn.state.config = reactive(temp)
     }
 })
+
 import setting from './setting.json'
 config = reactive(setting)
 

@@ -28,9 +28,16 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import emittBus from '@/model/bus.js'
+import postFile from '@/model/postFile'
 export default {
     name: 'speekQueue',
     setup() {
+        let store = useStore()
+        emittBus.on('startTask', (all) => {
+            postFile.main(all, store)
+        })
         return
     },
 }

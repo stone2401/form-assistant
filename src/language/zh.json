@@ -26,5 +26,6 @@
     "errorSuccess": "设置失败，请重启软件后重试",
     "createError": "创建失败：",
     "alrError": "创建失败：分类名为空或分类名长度大于10",
-    "alrError2": "创建失败：分类名已存"
+    "alrError2": "创建失败：分类名已存",
+    "mainTask": "主任务"
 }

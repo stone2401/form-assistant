@@ -1,8 +1,9 @@
-import { reactive, computed, toRefs, watch, onMounted } from 'vue'
+import { reactive, computed, toRefs, watch, onMounted, onUnmounted } from 'vue'
 import fileDB from '@/database/filedb'
+import emittBus from '@/model/bus'
 const overAll = 'overall'
 let allData = reactive({
-    allClassify: [],
+    allClassify: {},
     atClassify: null,
     atFileData: {},
     atFile: overAll,
@@ -19,14 +20,29 @@ const classifyStyle = function (item) {
     if (item === allData.atClassify) {
         return 'scrollbar-demo-item-select'
     } else {
-        return 'scrollbar-demo-item-noselect'
+        let itemFinished = allData['allClassify'][item]['finished']
+        if (itemFinished) {
+            return 'scrollbar-demo-item-success'
+        } else {
+            return 'scrollbar-demo-item-noselect'
+        }
     }
 }
 const fileShow = function (item) {
     if (item === allData.atFile) {
         return 'scrollbar-demo-item-select'
     } else {
-        return 'scrollbar-demo-item-noselect'
+        if (item === overAll) {
+            return 'scrollbar-demo-item-noselect'
+        }
+        let itemOutput = allData['atFileData']['fileDatas'][item]['output']
+        if (itemOutput === undefined) {
+            return 'scrollbar-demo-item-noselect'
+        } else if (itemOutput) {
+            return 'scrollbar-demo-item-success'
+        } else {
+            return 'scrollbar-demo-item-err'
+        }
     }
 }
 const clickTest = function (temp) {
@@ -37,6 +53,35 @@ const configAtFile = function (temp) {
     allData['atFile'] = temp
 }
 
+let atClassifyData = computed({
+    get() {
+        return allData['allClassify'][allData['atClassify']]
+    },
+})
+let file = computed({
+    get() {
+        let temp = allData['atFileData']['fileDatas']
+        if (allData['atFile'] === overAll) {
+            return undefined
+        }
+        return temp[allData['atFile']]
+    },
+})
+const pushDocs = function (docs) {
+    let temp = {}
+    docs.forEach((self) => {
+        let classify = self['classify']
+        temp[classify] = self
+    })
+    return temp
+}
+
+const start = function () {
+    emittBus.emit('startTask', { value: allData['atFileData'], outValue: atClassifyData.value })
+}
+const test = function () {
+    console.log(allData)
+}
 export default function () {
     watch(
         () => allData['atClassify'],
@@ -47,21 +92,17 @@ export default function () {
             fileDB.getAtFileData(allData['atClassify'], (err, docs) => {
                 if (!err) {
                     allData['atFileData'] = docs
-                    console.log(allData['atFileData'])
                     allData.showFileData = true
                 }
             })
         }
     )
     onMounted(() => {
-        setTimeout(() => {
-            fileDB.getAllClassify((err, docs) => {
-                if (!err) {
-                    allData.allClassify = docs
-                    console.log(docs)
-                }
-            })
-        }, 0)
+        fileDB.getAllClassify((err, docs) => {
+            if (!err) {
+                allData.allClassify = pushDocs(docs)
+            }
+        })
     })
-    return { ...toRefs(allData), classifyShow, classifyStyle, clickTest, fileShow, configAtFile }
+    return { test, start, file, ...toRefs(allData), classifyShow, classifyStyle, clickTest, fileShow, configAtFile, atClassifyData }
 }

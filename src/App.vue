@@ -9,9 +9,13 @@
                     <speekHeader></speekHeader>
                 </div>
                 <div class="speekView">
-                    <transition name="el-zoom-in-center">
-                        <router-view></router-view>
-                    </transition>
+                    <router-view v-slot="{ Component }">
+                        <transition name="el-zoom-in-center">
+                            <keep-alive :exclude="keepComp">
+                                <component :is="Component" />
+                            </keep-alive>
+                        </transition>
+                    </router-view>
                 </div>
             </el-main>
         </el-container>
@@ -29,8 +33,7 @@ export default {
     setup() {
         const router = useRouter()
         router.push('/blank')
-        const keepComp = ['speekFile', 'speekConfig']
-        // const keepComp = []
+        const keepComp = ['speekFile', 'speekConfig', 'speekShow']
         return { keepComp }
     },
 }

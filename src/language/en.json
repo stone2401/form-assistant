@@ -26,5 +26,6 @@
     "errorSuccess": "The configuration fails. Restart the software and try again",
     "createError": "Failed to create:",
     "alrError": "Existing failed to create: The category name is empty or the category name is longer than 10 characters",
-    "alrError2": "Existing failed to create: The class name already exists"
+    "alrError2": "Existing failed to create: The class name already exists",
+    "mainTask": "Main Task"
 }
