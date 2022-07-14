@@ -36,12 +36,16 @@
     "electron": "^13.0.0",
     "electron-devtools-installer": "^3.1.0",
     "element-plus": "^2.2.8",
+    "github-markdown-css": "^5.1.0",
+    "highlight.js": "^11.5.1",
     "less": "^4.0.0",
     "less-loader": "^8.0.0",
+    "markdown-it-vue": "^1.1.7",
     "moment": "^2.29.4",
     "unplugin-auto-import": "^0.9.2",
     "unplugin-vue-components": "^0.21.0",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-markdown-loader": "^2.5.0"
   },
   "browserslist": [
     "> 1%",

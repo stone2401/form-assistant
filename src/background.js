@@ -11,25 +11,19 @@ protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: tru
 let win = null
 async function createWindow() {
     // Create the browser window.
-    let updateWin = new BrowserWindow({
-        width: 600,
-        height: 300,
-        frame: false,
-    })
     win = new BrowserWindow({
         width: 1024,
         height: 660,
         frame: false,
-        show: false,
         webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
+            webSecurity: false,
         },
     })
-    updateWin.loadURL(`file://${__static}/update.html`)
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -40,10 +34,6 @@ async function createWindow() {
         // Load the index.html when not in development
         win.loadURL('app://./index.html')
     }
-    setTimeout(() => {
-        win.show()
-        updateWin.close()
-    }, 3000)
 }
 
 // Quit when all windows are closed.

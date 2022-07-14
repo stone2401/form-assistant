@@ -33,7 +33,12 @@ const fileShow = function (item) {
         return 'scrollbar-demo-item-select'
     } else {
         if (item === overAll) {
-            return 'scrollbar-demo-item-noselect'
+            let itemFinished = atClassifyData.value['finished']
+            if (itemFinished) {
+                return 'scrollbar-demo-item-success'
+            } else {
+                return 'scrollbar-demo-item-noselect'
+            }
         }
         let itemOutput = allData['atFileData']['fileDatas'][item]['output']
         if (itemOutput === undefined) {
@@ -67,6 +72,7 @@ let file = computed({
         return temp[allData['atFile']]
     },
 })
+
 const pushDocs = function (docs) {
     let temp = {}
     docs.forEach((self) => {

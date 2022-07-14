@@ -27,17 +27,19 @@
         <div class="show-right" v-if="atClassifyData">
             <el-form label-width="">
                 <el-form-item :label="lang['grouping']">{{ atClassifyData['classify'] }}</el-form-item>
-                <el-form-item label="创建时间：">{{ atClassifyData['time'] }}</el-form-item>
-                <el-form-item :label="lang['output']">{{ atClassifyData['output'] }}</el-form-item>
-                <el-form-item label="是否已导出：">{{}}</el-form-item>
+                <el-form-item :label="lang['createTime']">{{ atClassifyData['time'] }}</el-form-item>
+                <el-form-item :label="lang['output']">{{ atClassifyData['output'] === '' ? config['output'] : atClassifyData['output'] }}</el-form-item>
             </el-form>
             <el-form v-if="file">
-                <el-form-item label="文件名称：">{{ file['name'] }}</el-form-item>
-                <el-form-item label="文件路径：">{{ file['path'] }}</el-form-item>
-                <el-form-item label="文件类型：">{{ file['ext'] }}</el-form-item>
+                <el-form-item :label="lang['whetherExport']">{{ whetherExport }}</el-form-item>
+                <el-form-item :label="lang['fileName']">{{ file['name'] }}</el-form-item>
+                <el-form-item :label="lang['filePath']">{{ file['path'] }}</el-form-item>
+                <el-form-item :label="lang['fileType']">{{ file['ext'] }}</el-form-item>
             </el-form>
             <el-form>
-                <el-form-item label=""><el-button @click="start" type="primary" plain>开始任务</el-button></el-form-item>
+                <el-form-item label="">
+                    <el-button @click="start" type="primary" plain>{{ lang['startTask'] }}</el-button>
+                </el-form-item>
             </el-form>
         </div>
     </div>
@@ -59,11 +61,32 @@ export default {
                 return store.getters['lang']
             },
         })
+        let config = computed({
+            get() {
+                return store.getters['useConfig']
+            },
+        })
+        let whetherExport = computed({
+            get() {
+                if (allData.file.value === undefined) {
+                    return undefined
+                }
+                let put = allData.file.value['output']
+                if (put != undefined) {
+                    if (put) {
+                        return lang.value['yes']
+                    } else {
+                        return lang.value['no']
+                    }
+                }
+                return lang.value['no']
+            },
+        })
         let query = router.query
         if (query['classify'] != undefined) {
             allData.atClassify.value = query['classify']
         }
-        return { ...allData, allData, lang }
+        return { ...allData, allData, lang, whetherExport, config }
     },
 }
 </script>

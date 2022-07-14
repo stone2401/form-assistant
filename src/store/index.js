@@ -21,7 +21,7 @@ configDatabase.db.find({ _id: 'config' }, async (err, docs) => {
     } else {
         let temp = docs[0]
         if (whetherToken(temp)) {
-            let response = await Token.getUserToken()
+            let response = await Token.getUserToken(temp)
             let token = response['data']['access_token']
             setting['tokenObj']['token'] = token
             configDatabase.db.update({ _id: 'config' }, temp, (err) => {
@@ -59,6 +59,9 @@ const storn = createStore({
         AtRouter: (context) => {
             return context['atRouter']
         },
+        useConfig: (context) => {
+            return context['config']
+        },
     },
     mutations: {
         saveConfig(context) {
@@ -67,8 +70,8 @@ const storn = createStore({
                 console.log(context)
                 if (err) {
                     ElNotification({
-                        title: 'Success',
-                        message: storn.getters['lang']['settingSuccess'],
+                        title: 'Error',
+                        message: storn.getters['lang']['settingFailed'] + ': ' + error,
                         type: 'error',
                     })
                 } else {
@@ -84,7 +87,25 @@ const storn = createStore({
             context['atRouter'] = value
         },
     },
-    actions: {},
+    actions: {
+        async saveConfig(context) {
+            let config = context.getters['useConfig']
+            let response = null
+            try {
+                response = await Token.getUserToken(config)
+            } catch (error) {
+                ElNotification({
+                    title: 'err',
+                    message: storn.getters['lang']['settingFailed'] + ': ' + error,
+                    type: 'err',
+                })
+                return
+            }
+            let token = response['data']['access_token']
+            setting['tokenObj']['token'] = token
+            context.commit('saveConfig')
+        },
+    },
     modules: {},
 })
 

@@ -5,6 +5,11 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 module.exports = defineConfig({
     transpileDependencies: true,
     publicPath: './',
+    chainWebpack: (config) => {
+        config.module.rule('md').test(/\.md/).use('vue-loader').loader('vue-loader').end().use('vue-markdown-loader').loader('vue-markdown-loader/lib/markdown-compiler').options({
+            raw: true,
+        })
+    },
     pluginOptions: {
         electronBuilder: {
             externals: ['axios', 'core-js', 'nedb', 'qs', 'vue', 'vue-router', 'vuex'],
@@ -50,24 +55,6 @@ module.exports = defineConfig({
                 resolvers: [ElementPlusResolver()],
             }),
         ],
-    },
-    devServer: {
-        proxy: {
-            '/api': {
-                target: 'https://aip.baidubce.com',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': '',
-                },
-            },
-            '/execl': {
-                target: 'http://bj.bcebos.com',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/execl': '',
-                },
-            },
-        },
     },
 })
 

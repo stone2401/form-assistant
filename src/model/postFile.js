@@ -9,14 +9,14 @@ let G_config = null
 const day29 = 29 * 24 * 60 * 60 * 1000
 
 const getToken = function () {
-    let url = 'api/oauth/2.0/token?grant_type=client_credentials&client_id=4d3eEfGpwDTqPeFfH4k01lxX&client_secret=KkXK2LuRu9wUXpiePnojMOqsTQzlEZsy'
+    let url = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=4d3eEfGpwDTqPeFfH4k01lxX&client_secret=KkXK2LuRu9wUXpiePnojMOqsTQzlEZsy'
     return axios.get(url)
 }
 const getTimeStamp = function () {
     return new Date().getTime()
 }
 const getUserToken = function (config) {
-    let url = 'api/oauth/2.0/token?grant_type=client_credentials&client_id=' + config['API_key'] + '&client_secret=' + config['Secret_key']
+    let url = `${config['toekn_url']}client_id=${config['userToken']['API_key']}&client_secret=${config['userToken']['Secret_key']}`
     return axios.get(url)
 }
 const getConfigToken = function () {
@@ -52,15 +52,20 @@ const toBuffer = function (ab) {
     return buf
 }
 const dowlodExcel = async function (execlUrl) {
-    const url = new URL(execlUrl)
-    const realUrl = `execl${url['pathname']}${url['search']}`
-    let response = await axios.get(realUrl, { responseType: 'blob' })
+    let response = await axios.get(execlUrl, { responseType: 'blob' })
     let blob = new Blob([response['data']], { type: `text/plain;charset=utf-8` })
     let bufferData = await blob.arrayBuffer()
     return toBuffer(bufferData)
 }
+const getOutputPath = function () {
+    if (G_value['output'] != '') {
+        return G_value['output']
+    } else {
+        return G_config['output']
+    }
+}
 const saveExcel = function (bufferData, item) {
-    let outpath = pathModel.join(G_value['output'], G_value['classify'])
+    let outpath = pathModel.join(getOutputPath(), G_value['classify'])
     let outFilePath = pathModel.join(outpath, item['name'] + '.xlsx')
     open.mkdir(outpath, { recursive: true }, (err) => {})
     let err = open.writeFileSync(outFilePath, bufferData)
@@ -75,6 +80,11 @@ const main = async function (all, store) {
     G_config = getStronConfig()
     let fileDatas = all['value']['fileDatas']
     G_value = all['outValue']
+    ElNotification({
+        title: 'Success',
+        message: 'Successful start',
+        type: 'success',
+    })
     for (const key in fileDatas) {
         let item = fileDatas[key]
         let requetsData = getRequestData(item)

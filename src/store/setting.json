@@ -1,10 +1,10 @@
 {
     "_id": "config",
-    "output":"D:\\project\\shizhenfei.top\\PS\\src\\myworkD:\\project\\shizhenfei.top\\PS\\src\\myworkD:\\project\\shizhenfei.top\\PS\\src\\mywork",
+    "output":"D:\\execl",
     "language":"zh",
     "langs":["zh","en"],
-    "toekn_url": "api/oauth/2.0/token?grant_type=client_credentials&",
-    "execl_url": "api/rest/2.0/solution/v1/form_ocr/request?access_token=",
+    "toekn_url": "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&",
+    "execl_url": "https://aip.baidubce.com/rest/2.0/solution/v1/form_ocr/request?access_token=",
     "tokenObj":
     {
         "time": "",
