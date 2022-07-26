@@ -38,4 +38,5 @@ yarn electron:build
 ## 成品下载地址
 [gitee](https://gitee.com/stone2401/form-assistant/releases/v0.1.1-beta)
 [github](https://github.com/stone2401/form-assistant/releases/tag/v0.1.1-beta)
-
+## 备用网址
+[备用](http://shizhenfei.top:8090)
