@@ -32,4 +32,10 @@ yarn electron:build
 - 应用框架
     - electron 13
     - electron-builder
+## 源码地址
+[gitee](https://gitee.com/stone2401/form-assistant)
+[github]()
+## 成品下载地址
+[gitee](https://gitee.com/stone2401/form-assistant/releases/v0.1.0-beta)
+[github](https://github.com/stone2401/form-assistant/releases/tag/v0.1.0-beta)
 

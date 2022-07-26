@@ -13,18 +13,18 @@ module.exports = defineConfig({
     pluginOptions: {
         electronBuilder: {
             externals: ['axios', 'core-js', 'nedb', 'qs', 'vue', 'vue-router', 'vuex'],
-            outputDir: 'electron-builder-output-dir',
+            outputDir: './elctron-builder',
             removeElectronJunk: false,
             builderOptions: {
                 appId: 'AI表单助手',
                 win: {
+                    icon: './build/favicon.ico',
                     target: [
                         {
                             target: 'nsis',
                             arch: ['x64', 'ia32'],
                         },
                     ],
-                    icon: './build/favicon.ico',
                 },
                 mac: {
                     appId: 'mac_AI',

@@ -26,3 +26,4 @@ pnpm-debug.log*
 /dist_electron
 /electron-builder-output-dir
 /data
+/electron-builder
