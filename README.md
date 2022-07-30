@@ -15,7 +15,7 @@ yarn electron:serve
 yarn electron:build
 ```
 
-## 简绍
+## 简介
 该项目基于`百度表单识别接口`，意在帮助用户办公，处理表单类数据减轻工作强度（处理表单转execl这种简单但重复无味的工作）。
 
 ## 技术说明
@@ -36,7 +36,7 @@ yarn electron:build
 [gitee](https://gitee.com/stone2401/form-assistant)
 [github](https://github.com/stone2401/form-assistant)
 ## 成品下载地址
-[gitee](https://gitee.com/stone2401/form-assistant/releases/v0.1.1-beta)
-[github](https://github.com/stone2401/form-assistant/releases/tag/v0.1.1-beta)
+[gitee](https://gitee.com/stone2401/form-assistant/releases/v0.1.0-beta)
+[github](https://github.com/stone2401/form-assistant/releases/tag/v0.1.0-beta)
 ## 备用网址
 [备用](http://shizhenfei.top:8090)
